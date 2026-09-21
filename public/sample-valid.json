@@ -1,0 +1,7 @@
+{
+    "invoiceNumber": "invoice-1",
+    "buyerTin":"C24479062000",
+    "quantity":"5",
+    "unitPrice":"10",
+    "lineAmount":"50"
+}
