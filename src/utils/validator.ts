@@ -1,15 +1,37 @@
-import {z} from 'zod';
+export interface validationError{
+    path: string,
+    message: string
+}
 
-export const invoiceSchema = z.object({
-    invoiceNumber: z.string().min(1,"invoice number is required"),
-    buyerTin: z.string().min(1,"buyer tin cant be empty"),
-    quantity: z.refine((val)=> !isNaN(Number(val)) && Number(val)>0,{
-        message : "quantity must be a valid number string",
-    }),
-    unitPrice: z.refine((val)=> !isNaN(Number(val)) && Number(val)>0,{
-        message : "unitprice must be a valid number string"
-    }),
-    lineAmount: z.refine((val)=> !isNaN(Number(val)) && Number(val)>0,{
-        message : "lineamount must be a valid number string"
-    })
-}).refine((data)=>)
+export function validateAndFix(rawJson: any){
+    const errors: validationError[]=[];
+    const fixedJson:Record<string, unknown>={...rawJson};
+
+    if (!rawJson.invoiceNumber){
+        errors.push({path:"invoiceNumber", message:"Missing invoiceNumber"});
+        fixedJson.invoiceNumber="INV-000";
+    }
+
+    if (!rawJson.buyerTin){
+        errors.push({path:"buyerTin", message:"Missing buyerTin"});
+        fixedJson.buyerTin="C500000000";
+    }
+
+    const quantity=parseFloat(rawJson.quantity)|| 0;
+    const unitPrice=parseFloat(rawJson.unitPrice)|| 0;
+    const lineTotal=parseFloat(rawJson.lineAmount)|| 0;
+
+    const expectedTotal=quantity*unitPrice;
+
+    if (lineTotal!==expectedTotal){
+        errors.push({path:"total", message:`Total should be ${expectedTotal} but got ${lineTotal}`});
+        fixedJson.lineAmount=expectedTotal;
+    }
+
+    return{
+        isValid: errors.length===0,
+        errors:errors,
+        originalJson: rawJson,
+        fixedJson: fixedJson
+    }
+}

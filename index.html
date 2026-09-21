@@ -1,13 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>customer-helper</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/style.css">
+    <title>Invoice Validator</title>
+</head>
+<body>
+    <div class="container">
+
+    <!-- <div class="button-group">
+        <button id="validateButton">Validate Invoice</button>
+    </div> -->
+
+    <textarea id="jsonInput" rows="10" cols="50" placeholder="Enter JSON here..."></textarea>
+    </br>
+
+    <button id="buttonValidate" class="button-primary">Validate</button>
+
+    <div id="statusOutput"></div>
+
+    <div id="diffOutput" class="diff-container" style="display:none;">
+        <div class="diff-box">
+            <h3 class="red-title">Original Input(json)</h3>
+            <pre id="OriginalPre" class="red-box"></pre>
+        </div>  
+        <div class="diff-box">
+            <h3 class="green-title">Fixed Output(json)</h3>
+            <pre id="FixedPre" class="green-box"></pre>
+        </div>
+    </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
 </html>
