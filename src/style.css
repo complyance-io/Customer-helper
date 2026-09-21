@@ -103,3 +103,17 @@ pre{
     border-radius: 4px;
     margin-top: 20px;
 }
+
+.diff-removed{
+    background-color: #ffe6e6;
+    color: #cc0000;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.diff-added{
+    background-color: #e6ffe6;
+    color: #006600;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
